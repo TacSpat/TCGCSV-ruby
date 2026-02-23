@@ -114,38 +114,36 @@ module TcgCsv
     # ── Single Card Lookup ───────────────────────────────────────
 
     # Find a single card by name and return it with prices loaded.
+    # Group is optional — omit it to search across all sets.
     #
+    #   client.find_card("Charizard", category: "Pokemon")
     #   client.find_card("Charizard", category: "Pokemon", group: "Base Set")
     #   client.find_card("Lugia VSTAR", category: 3, group: 3170)
     #
-    def find_card(name, category:, group:)
-      cat_id = resolve_id(category, :category)
-      grp_id = resolve_id(group, :group, cat_id)
+    def find_card(name, category:, group: nil)
       pattern = name.downcase
-      products_with_prices(cat_id, grp_id).find { |p| p.name.downcase.include?(pattern) }
+      search_products(category, group).find { |p| p.name.downcase.include?(pattern) }
     end
 
     # Find ALL cards matching a name with prices loaded.
+    # Group is optional — omit it to search across all sets.
     #
+    #   client.find_cards("Pikachu", category: "Pokemon")
     #   client.find_cards("Pikachu", category: "Pokemon", group: "Base Set")
-    #   # => [Pikachu, Pikachu (Full Art), ...]
     #
-    def find_cards(name, category:, group:)
-      cat_id = resolve_id(category, :category)
-      grp_id = resolve_id(group, :group, cat_id)
+    def find_cards(name, category:, group: nil)
       pattern = name.downcase
-      products_with_prices(cat_id, grp_id).select { |p| p.name.downcase.include?(pattern) }
+      search_products(category, group).select { |p| p.name.downcase.include?(pattern) }
     end
 
     # Get a quick price hash for a card.
+    # Group is optional — omit it to search across all sets.
     #
+    #   client.card_price("Charizard", category: "Pokemon")
     #   client.card_price("Charizard", category: "Pokemon", group: "Base Set")
-    #   # => { "Holofoil" => { low: 200.0, mid: 350.0, high: 500.0, market: 345.00, direct_low: nil } }
-    #
     #   client.card_price("Lugia VSTAR", category: 3, group: 3170)
-    #   # => { "Holofoil" => { low: 15.0, mid: 22.5, high: 45.0, market: 20.99, direct_low: 18.50 } }
     #
-    def card_price(name, category:, group:)
+    def card_price(name, category:, group: nil)
       card = find_card(name, category: category, group: group)
       raise NotFoundError, "Card not found: #{name}" unless card
 
@@ -209,6 +207,17 @@ module TcgCsv
     end
 
     private
+
+    def search_products(category_name_or_id, group_name_or_id)
+      cat_id = resolve_id(category_name_or_id, :category)
+
+      if group_name_or_id
+        grp_id = resolve_id(group_name_or_id, :group, cat_id)
+        products_with_prices(cat_id, grp_id)
+      else
+        groups(cat_id).flat_map { |g| products_with_prices(cat_id, g.id) }
+      end
+    end
 
     def find_category_by_name(pattern)
       all = categories

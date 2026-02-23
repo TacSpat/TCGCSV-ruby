@@ -238,6 +238,15 @@ RSpec.describe TcgCsv do
       card = client.find_card('Mewtwo', category: 3, group: 3170)
       expect(card).to be_nil
     end
+
+    it 'searches all groups when group is omitted' do
+      stub_api('/tcgplayer/3/604/products', 'products')
+      stub_api('/tcgplayer/3/604/prices', 'prices')
+
+      card = client.find_card('Lugia VSTAR', category: 'Pokemon')
+      expect(card.name).to eq('Lugia VSTAR')
+      expect(card.market_price).to eq(20.99)
+    end
   end
 
   describe 'Client#find_cards' do
@@ -246,6 +255,15 @@ RSpec.describe TcgCsv do
       expect(cards.length).to eq(2)
       expect(cards.map(&:name)).to contain_exactly('Lugia VSTAR', 'Lugia V')
       cards.each { |c| expect(c.prices).not_to be_empty }
+    end
+
+    it 'searches all groups when group is omitted' do
+      stub_api('/tcgplayer/3/604/products', 'products')
+      stub_api('/tcgplayer/3/604/prices', 'prices')
+
+      # Both groups use same fixture so we get duplicates, but the point is it searches both
+      cards = client.find_cards('Lugia', category: 'Pokemon')
+      expect(cards.length).to eq(4)
     end
   end
 
@@ -267,6 +285,14 @@ RSpec.describe TcgCsv do
       expect(summary.keys).to contain_exactly('Normal', 'Holofoil')
       expect(summary['Normal'][:market]).to eq(3.75)
       expect(summary['Holofoil'][:market]).to eq(7.25)
+    end
+
+    it 'works without a group' do
+      stub_api('/tcgplayer/3/604/products', 'products')
+      stub_api('/tcgplayer/3/604/prices', 'prices')
+
+      summary = client.card_price('Lugia VSTAR', category: 'Pokemon')
+      expect(summary['Holofoil'][:market]).to eq(20.99)
     end
 
     it 'raises when card is not found' do
