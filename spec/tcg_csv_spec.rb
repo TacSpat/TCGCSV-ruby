@@ -333,6 +333,34 @@ RSpec.describe TcgCsv do
     end
   end
 
+  describe 'Client#prefetch' do
+    before do
+      stub_api('/tcgplayer/3/604/products', 'products')
+      stub_api('/tcgplayer/3/604/prices', 'prices')
+    end
+
+    it 'caches all groups, products, and prices for a category' do
+      result = client.prefetch('Pokemon')
+      expect(result[:category]).to eq('Pokemon')
+      expect(result[:groups_cached]).to eq(2)
+
+      expect(WebMock).to have_requested(:get, 'https://tcgcsv.com/tcgplayer/categories').once
+      expect(WebMock).to have_requested(:get, 'https://tcgcsv.com/tcgplayer/3/groups').once
+      expect(WebMock).to have_requested(:get, 'https://tcgcsv.com/tcgplayer/3/3170/products').once
+      expect(WebMock).to have_requested(:get, 'https://tcgcsv.com/tcgplayer/3/3170/prices').once
+      expect(WebMock).to have_requested(:get, 'https://tcgcsv.com/tcgplayer/3/604/products').once
+      expect(WebMock).to have_requested(:get, 'https://tcgcsv.com/tcgplayer/3/604/prices').once
+    end
+
+    it 'prefetches only specific groups when given' do
+      stub_api('/tcgplayer/3/604/products', 'products')
+      stub_api('/tcgplayer/3/604/prices', 'prices')
+
+      result = client.prefetch('Pokemon', groups: ['Silver Tempest', 'Base Set'])
+      expect(result[:groups_cached]).to eq(2)
+    end
+  end
+
   describe 'File-based caching' do
     it 'caches responses to disk — no second HTTP call' do
       client.categories

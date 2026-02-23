@@ -60,5 +60,9 @@ module TcgCsv
     def card_price(name, **opts)
       client.card_price(name, **opts)
     end
+
+    def prefetch(category_name_or_id, **opts)
+      client.prefetch(category_name_or_id, **opts)
+    end
   end
 end

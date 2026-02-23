@@ -36,12 +36,9 @@ module TcgCsv
 
     # Find a single category by ID (Integer) or name (String, case-insensitive partial match)
     def category(name_or_id)
-      if name_or_id.is_a?(Integer)
-        categories.find { |c| c.id == name_or_id }
-      else
-        pattern = name_or_id.to_s.downcase
-        categories.find { |c| c.name.downcase.include?(pattern) || c.display_name.downcase.include?(pattern) }
-      end
+      return categories.find { |c| c.id == name_or_id } if name_or_id.is_a?(Integer)
+
+      find_category_by_name(name_or_id.to_s.downcase)
     end
 
     # ── Groups (Sets) ───────────────────────────────────────────
@@ -58,7 +55,9 @@ module TcgCsv
         groups(category_id).find { |g| g.id == name_or_id }
       else
         pattern = name_or_id.to_s.downcase
-        groups(category_id).find { |g| g.name.downcase.include?(pattern) }
+        all = groups(category_id)
+        all.find { |g| g.name.downcase == pattern } ||
+          all.find { |g| g.name.downcase.include?(pattern) }
       end
     end
 
@@ -175,6 +174,30 @@ module TcgCsv
       end
     end
 
+    # Pre-fetch and cache an entire category (all groups, products, and prices).
+    # After this, all lookups for that category are instant from disk.
+    #
+    #   client.prefetch("Pokemon")                    # cache everything
+    #   client.prefetch("Pokemon", groups: ["Base Set", "Silver Tempest"])  # specific sets only
+    #
+    def prefetch(category_name_or_id, groups: nil)
+      cat = category(category_name_or_id)
+      raise NotFoundError, "Category not found: #{category_name_or_id}" unless cat
+
+      target_groups = if groups
+                        groups.map { |g| group(cat.id, g) }.compact
+                      else
+                        self.groups(cat.id)
+                      end
+
+      target_groups.each do |grp|
+        products(cat.id, grp.id)
+        prices(cat.id, grp.id)
+      end
+
+      { category: cat.name, groups_cached: target_groups.length }
+    end
+
     # Wipe the entire cache (static + prices)
     def clear_cache!
       @cache.clear
@@ -186,6 +209,12 @@ module TcgCsv
     end
 
     private
+
+    def find_category_by_name(pattern)
+      all = categories
+      all.find { |c| c.name.downcase == pattern || c.display_name.downcase == pattern } ||
+        all.find { |c| c.name.downcase.include?(pattern) || c.display_name.downcase.include?(pattern) }
+    end
 
     def resolve_id(name_or_id, type, parent_id = nil)
       return name_or_id if name_or_id.is_a?(Integer)
