@@ -1,0 +1,37 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+  SuggestExtensions: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - '*.gemspec'
+
+Layout/LineLength:
+  Max: 120
+
+Naming/PredicateMethod:
+  Enabled: false
+
+Naming/VariableNumber:
+  AllowedIdentifiers:
+    - attack_1
+    - attack_2
+    - attack_3

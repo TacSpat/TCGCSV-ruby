@@ -1,0 +1,64 @@
+{
+  "totalItems": 3,
+  "success": true,
+  "errors": [],
+  "results": [
+    {
+      "productId": 451396,
+      "name": "Lugia VSTAR",
+      "cleanName": "Lugia VSTAR",
+      "imageUrl": "https://example.com/lugia.jpg",
+      "categoryId": 3,
+      "groupId": 3170,
+      "url": "https://tcgplayer.com/lugia-vstar",
+      "modifiedOn": "2026-01-01T00:00:00",
+      "imageCount": 1,
+      "presaleInfo": { "isPresale": false, "releasedOn": "2022-11-11", "note": null },
+      "extendedData": [
+        { "name": "Number", "displayName": "Number", "value": "202" },
+        { "name": "Rarity", "displayName": "Rarity", "value": "Secret Rare" },
+        { "name": "Card Type", "displayName": "Card Type", "value": "Pokemon" },
+        { "name": "HP", "displayName": "HP", "value": "280" },
+        { "name": "Stage", "displayName": "Stage", "value": "VSTAR" },
+        { "name": "CardText", "displayName": "Card Text", "value": "Tempest Dive does big damage." },
+        { "name": "Attack 1", "displayName": "Attack 1", "value": "Tempest Dive (220)" },
+        { "name": "Weakness", "displayName": "Weakness", "value": "Lightning" },
+        { "name": "Resistance", "displayName": "Resistance", "value": "Fighting" },
+        { "name": "RetreatCost", "displayName": "Retreat Cost", "value": "2" }
+      ]
+    },
+    {
+      "productId": 450289,
+      "name": "Lugia V",
+      "cleanName": "Lugia V",
+      "imageUrl": "https://example.com/lugiav.jpg",
+      "categoryId": 3,
+      "groupId": 3170,
+      "url": "https://tcgplayer.com/lugia-v",
+      "modifiedOn": "2026-01-01T00:00:00",
+      "imageCount": 1,
+      "presaleInfo": { "isPresale": false, "releasedOn": "2022-11-11", "note": null },
+      "extendedData": [
+        { "name": "Number", "displayName": "Number", "value": "138" },
+        { "name": "Rarity", "displayName": "Rarity", "value": "Ultra Rare" },
+        { "name": "Card Type", "displayName": "Card Type", "value": "Pokemon" },
+        { "name": "HP", "displayName": "HP", "value": "220" }
+      ]
+    },
+    {
+      "productId": 283388,
+      "name": "Silver Tempest Booster Pack",
+      "cleanName": "Silver Tempest Booster Pack",
+      "imageUrl": "https://example.com/booster.jpg",
+      "categoryId": 3,
+      "groupId": 3170,
+      "url": "https://tcgplayer.com/booster",
+      "modifiedOn": "2026-01-01T00:00:00",
+      "imageCount": 1,
+      "presaleInfo": { "isPresale": false, "releasedOn": "2022-11-11", "note": null },
+      "extendedData": [
+        { "name": "CardText", "displayName": "Card Text", "value": "10 random cards" }
+      ]
+    }
+  ]
+}

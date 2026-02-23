@@ -1,0 +1,52 @@
+{
+  "totalItems": 3,
+  "success": true,
+  "errors": [],
+  "results": [
+    {
+      "categoryId": 1,
+      "name": "Magic",
+      "displayName": "Magic: The Gathering",
+      "seoCategoryName": "Magic the Gathering TCG",
+      "categoryDescription": "The original trading card game.",
+      "categoryPageTitle": null,
+      "sealedLabel": "Sealed Products",
+      "nonSealedLabel": "Single Cards",
+      "conditionGuideUrl": "https://example.com/magic",
+      "isScannable": true,
+      "popularity": 7000000,
+      "isDirect": true,
+      "modifiedOn": "2026-01-01T00:00:00"
+    },
+    {
+      "categoryId": 3,
+      "name": "Pokemon",
+      "displayName": "Pokemon",
+      "seoCategoryName": "Pokemon TCG",
+      "categoryDescription": "Gotta catch em all.",
+      "categoryPageTitle": null,
+      "sealedLabel": "Sealed Products",
+      "nonSealedLabel": "Single Cards",
+      "conditionGuideUrl": "https://example.com/pokemon",
+      "isScannable": true,
+      "popularity": 5000000,
+      "isDirect": true,
+      "modifiedOn": "2026-01-01T00:00:00"
+    },
+    {
+      "categoryId": 2,
+      "name": "YuGiOh",
+      "displayName": "Yu-Gi-Oh!",
+      "seoCategoryName": "YuGiOh TCG",
+      "categoryDescription": null,
+      "categoryPageTitle": null,
+      "sealedLabel": null,
+      "nonSealedLabel": null,
+      "conditionGuideUrl": "https://example.com/yugioh",
+      "isScannable": false,
+      "popularity": 3000000,
+      "isDirect": false,
+      "modifiedOn": "2026-01-01T00:00:00"
+    }
+  ]
+}

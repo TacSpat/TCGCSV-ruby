@@ -1,0 +1,25 @@
+{
+  "totalItems": 2,
+  "success": true,
+  "errors": [],
+  "results": [
+    {
+      "groupId": 3170,
+      "name": "Silver Tempest",
+      "abbreviation": "SIT",
+      "isSupplemental": false,
+      "publishedOn": "2022-11-11T00:00:00",
+      "modifiedOn": "2026-01-01T00:00:00",
+      "categoryId": 3
+    },
+    {
+      "groupId": 604,
+      "name": "Base Set",
+      "abbreviation": "BS",
+      "isSupplemental": false,
+      "publishedOn": "1999-01-09T00:00:00",
+      "modifiedOn": "2026-01-01T00:00:00",
+      "categoryId": 3
+    }
+  ]
+}
